@@ -84,6 +84,7 @@ void updateTuioBlob(TuioBlob tblb) {}
 void keyPressed() {
   calibrationKeyPressedHandler();
   if (USE_TEST_INTERFACE) testInterfaceKeyPressedHandler();
+  if (key == 'k') model.showColors = !model.showColors;
   redraw();
 }
 
