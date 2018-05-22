@@ -4,8 +4,6 @@
 class Manipul8View implements View {
   Manipul8Model model;
   Box box;
-  int FRAME_HEIGHT = 100;
-  
   FrameView frameView;
   PatternView pv1;
   PatternView pv2;
@@ -40,7 +38,7 @@ class Manipul8View implements View {
   }
   
   void handle(Event e) {
-    if (model.debug) { println(); e.log("Manipul8View"); }
+    log.debug("  Manipul8View received event: " + e.describe());
     if (frameView.responds_to(e)) { frameView.handle(e);} 
     if (pv1.responds_to(e)) { pv1.handle(e);} 
     if (pv2.responds_to(e)) { pv2.handle(e);} 

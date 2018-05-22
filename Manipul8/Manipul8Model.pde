@@ -1,5 +1,4 @@
-// The model is the heart of the app. 
-// Whenever you want to 
+// The model keeps track of state.
 
 class Manipul8Model {
   HashMap<Integer, Integer> coeffIDs;
@@ -9,7 +8,6 @@ class Manipul8Model {
   ArrayList<View> views;
   IntList nValues;
   IntDict colors;
-  boolean debug;
   boolean hasEquation = false;
   boolean showColors;
   color standardColor;
@@ -20,7 +18,6 @@ class Manipul8Model {
   }
  
   void handle(Event e) {
-    if (debug) { e.log("Manipul8Model"); }
     if (e.name == "EQUATION ADDED" && !hasEquation) { addEquation(e); }
     if (e.name == "EQUATION REMOVED" && hasEquation) { removeEquation(e);}
   }
@@ -40,7 +37,6 @@ class Manipul8Model {
   void addEquation(Event e) {
     coeffTypes = equationIDs.get(e.id);
     coeffs = new int[coeffTypes.length];
-    // FAKE coeffs = new int[] {4, 2, 6};
     hasEquation = true;
     broadcast(new Event("MODEL CHANGED EQUATION"));
   }
@@ -63,7 +59,6 @@ class Manipul8Model {
   
   // Sets values that affect the program's behavior. 
   void configure() {
-    debug = true;
     equationIDs = new HashMap<Integer, String[]>();
     equationIDs.put(119, new String[] {"QUAD", "LINEAR", "CONSTANT"});
     equationIDs.put(120, new String[] {"LINEAR", "CONSTANT"});
@@ -96,15 +91,15 @@ class Manipul8Model {
     coeffIDs.put(107,9);
     
     nValues = new IntList();
-    nValues.append(1);
-    nValues.append(2);
-    nValues.append(3);
+    nValues.append(N1);
+    nValues.append(N2);
+    nValues.append(N3);
     
-    showColors= true;
-    standardColor= color(255,226,0);
+    showColors= SHOW_COLORS;
+    standardColor= STANDARD_COLOR;
     colors = new IntDict();
-    colors.set("QUAD", color(255,87,78));
-    colors.set("LINEAR", color(125,209,69));
-    colors.set("CONSTANT", color(74,201,239)); 
+    colors.set("QUAD", QUAD_COLOR);
+    colors.set("LINEAR", LINEAR_COLOR);
+    colors.set("CONSTANT", CONSTANT_COLOR); 
   }
 }

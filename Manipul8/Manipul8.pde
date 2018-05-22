@@ -1,100 +1,95 @@
-import java.util.Map; //<>// //<>// //<>//
+import java.util.Map; //<>//
 import TUIO.*;
 
+Logger log;
 TuioProcessing tuioClient;
-Dispatcher dispatcher = new Dispatcher();
-Manipul8Model model = new Manipul8Model();
-
-// Manipul8View view = new Manipul8View(model, new Box(10, 10, 4000, 3000));
-Manipul8View view = new Manipul8View(model, new Box(10, 10, 600, 400));
-
-//Calibration calibration;
-
-float ANGLE_OFFSET = PI;
-
-int scaleX(float x) {
-   return int(-330+3700 * x);
-}
-int scaleY(float y) {
-  return int(-500+3300 * y);
-}
+Dispatcher dispatcher;
+Manipul8Model model;
+Manipul8View view;
+Calibration calibration;
 
 void setup() {
-  //size(4000, 3000);
-  size(620, 420);
-//calibration = new Calibration();
-  //size(3500, 2000);
+  // This is the only setting that can't live in Settings, due to a 
+  // Processing requirement. Keep this in sync with 
+  // the values of VIEW_* in Settings. 
+  size(1000, 600);
+  
+  noLoop();
+  log = new Logger(LOG_LEVEL);
+  dispatcher = new Dispatcher();
+  model = new Manipul8Model();
+  Box viewBox = new Box(VIEW_X, VIEW_Y, VIEW_WIDTH, VIEW_HEIGHT);
+  view = new Manipul8View(model, viewBox);
+  calibration = new Calibration();
   tuioClient  = new TuioProcessing(this);
-  setupTesting();
+  if (USE_TEST_INTERFACE) { setupTesting(); } 
 }
 
 void draw() {
-  //if(!calibration.calibrated) calibration.draw();
   background(0);
   view.render();
+  if(!calibration.calibrated) calibration.draw();
 }
+
+// ====== TUIO INTERFACE =========
 
 // called when an object is added to the scene
 void addTuioObject(TuioObject tobj) {
-  Event e = new Event("FIDUCIAL ADDED", scaleX(tobj.getX()), scaleY(tobj.getY()), tobj.getAngle() + ANGLE_OFFSET, tobj.getSymbolID());
-  view.handle(e);
-  dispatcher.handle(e);
+  if (!USE_TEST_INTERFACE) {
+    //Event e = new Event("FIDUCIAL ADDED", scaleX(tobj.getX()), scaleY(tobj.getY()), tobj.getAngle() + ANGLE_OFFSET, tobj.getSymbolID());
+    Event e = new Event("FIDUCIAL ADDED", tobj.getScreenX(width), tobj.getScreenY(height), tobj.getAngle() + ANGLE_OFFSET, tobj.getSymbolID());
+
+    log.info(e.describe());
+    view.handle(e);
+    dispatcher.handle(e);
+    redraw();
+  }
 }
 
 // called when an object is moved
 void updateTuioObject (TuioObject tobj) {
-  Event e = new Event("FIDUCIAL CHANGED", scaleX(tobj.getX()), scaleY(tobj.getY()), tobj.getAngle()+ANGLE_OFFSET, tobj.getSymbolID());
-  view.handle(e);
-  dispatcher.handle(e);
+  if (!USE_TEST_INTERFACE) {
+    //Event e = new Event("FIDUCIAL CHANGED", scaleX(tobj.getX()), scaleY(tobj.getY()), tobj.getAngle()+ANGLE_OFFSET, tobj.getSymbolID());
+    Event e = new Event("FIDUCIAL CHANGED", tobj.getScreenX(width), tobj.getScreenY(height), tobj.getAngle()+ANGLE_OFFSET, tobj.getSymbolID());
+    log.info(e.describe());
+    view.handle(e);
+    dispatcher.handle(e);
+    redraw();
+  }
 }
 
 // called when an object is removed from the scene
 void removeTuioObject(TuioObject tobj) {
-  Event e = new Event("FIDUCIAL REMOVED", scaleX(tobj.getX()), scaleY(tobj.getY()), tobj.getAngle()+ANGLE_OFFSET, tobj.getSymbolID());
-  view.handle(e);
-  dispatcher.handle(e);
-}
-
-
-// ====== TESTING =========
-
-Event fakeFiducial;
-
-void setupTesting() {
-  int frameCenter[] = view.frameView.box.center();
-  fakeFiducial = new Event("FIDUCIAL ADDED", frameCenter[0], frameCenter[1], radians(45), 119);
-  view.handle(fakeFiducial);
-  dispatcher.handle(fakeFiducial);
-  
-  fakeFiducial.name = "FIDUCIAL CHANGED";
-  view.handle(fakeFiducial);
-  dispatcher.handle(fakeFiducial);
-}
-
-void keyPressed() {
-  if (key == 'q') replaceFiducial(119, true);
-  if (key == 'l') replaceFiducial(120, true);
-  if (key == '0') replaceFiducial(88, false);
-  if (key == '1') replaceFiducial(89, false);
-  if (key == '2') replaceFiducial(90, false);
-}
-
-void replaceFiducial(int id, boolean remove) {
-  if (remove) {
-    fakeFiducial.name = "FIDUCIAL REMOVED";
-    view.handle(fakeFiducial);
-    dispatcher.handle(fakeFiducial);
+  if (!USE_TEST_INTERFACE) {
+    //Event e = new Event("FIDUCIAL REMOVED", scaleX(tobj.getX()), scaleY(tobj.getY()), tobj.getAngle()+ANGLE_OFFSET, tobj.getSymbolID());
+    Event e = new Event("FIDUCIAL REMOVED", tobj.getScreenX(width), tobj.getScreenY(height), tobj.getAngle()+ANGLE_OFFSET, tobj.getSymbolID());
+    log.info(e.describe());
+    view.handle(e);
+    dispatcher.handle(e);
+    redraw();
   }
-  fakeFiducial.name = "FIDUCIAL ADDED";
-  fakeFiducial.id = id;
-  view.handle(fakeFiducial);
-  dispatcher.handle(fakeFiducial);
+}
+
+// ====== UNUSED TUIO EVENTS =========
+// These are defines so TUIO doesn't complain that they're missing. 
+void refresh(TuioTime bundleTime) {}
+void addTuioCursor(TuioCursor tcur) {}
+void removeTuioCursor(TuioCursor tcur) {}
+void updateTuioCursor(TuioCursor tcur) {}
+void addTuioBlob(TuioBlob tblb) {}
+void removeTuioBlob(TuioBlob tblb) {}
+void updateTuioBlob(TuioBlob tblb) {}
+
+// ====== Mouse events =========
+void keyPressed() {
+  calibrationKeyPressedHandler();
+  if (USE_TEST_INTERFACE) testInterfaceKeyPressedHandler();
+  redraw();
 }
 
 void mouseMoved() {
-  fakeFiducial.name = "FIDUCIAL CHANGED";
-  fakeFiducial.x = mouseX;
-  fakeFiducial.y = mouseY;
-  view.handle(fakeFiducial);
-  dispatcher.handle(fakeFiducial);
+  if (USE_TEST_INTERFACE) {
+    testInterfaceMouseMovedHandler();
+    redraw();
+  }
 }

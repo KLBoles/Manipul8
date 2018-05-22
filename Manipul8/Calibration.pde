@@ -1,11 +1,9 @@
-/*
-
 // helper function
 int tx(TuioObject tobj) { return  calibration.corrected_x(tobj); }
 int ty(TuioObject tobj) { return  calibration.corrected_y(tobj); }
 
 // keyboard keys for the calibration procedure
-void keyPressed() 
+void calibrationKeyPressedHandler() 
 {
   ArrayList<TuioObject> tuioObjectList = tuioClient.getTuioObjectList();
   
@@ -50,7 +48,7 @@ class Calibration {
     String lines[] = loadStrings("calibration.txt");
     if(lines != null && lines.length == 8)
     {
-      println("Loading calibration file...");
+      log.debug("Loading calibration file...");
       b3 = float(lines[0]);
       b2 = float(lines[1]);
       a2 = float(lines[2]);
@@ -60,7 +58,7 @@ class Calibration {
       a1 = float(lines[6]);
       c1 = float(lines[7]);
       calibrated = true;
-      println("Done.");
+      log.debug("Done.");
     }
   }
   
@@ -106,7 +104,7 @@ class Calibration {
 
   int calibrate()
   {
-    println( "running calibration" );
+    log.info( "Calibrating. Move a fidicual over each cross and then press 'c'." );
   
   
     float [][] matrix = { 
@@ -163,8 +161,8 @@ class Calibration {
     bb[3] = - bb[3] / matrix[2][3] * matrix[2][2] + bb[2];
     matrix[2][3] = 0;
     
-    println( "var57, var56, var55");
-    println( matrix[4][6] + " " + matrix[4][5] + " " + matrix[4][4] );
+    log.debug( "var57, var56, var55");
+    log.debug( matrix[4][6] + " " + matrix[4][5] + " " + matrix[4][4] );
     
     for( int j = 5; j < 8; j ++ )
     {
@@ -244,7 +242,7 @@ class Calibration {
     if( Float.isNaN( a1 ) ) return 1;
     if( Float.isNaN( c1 ) ) return 1;
     
-    println( "calibrated OK" );
+    log.info( "calibrated OK" );
     
     String data = ""+b3+";"+b2+";"+a2+";"+c2+";"+a3+";"+b1+";"+a1+";"+c1;
     
@@ -252,5 +250,4 @@ class Calibration {
     
     return 0;
   }
-
-*/
+}

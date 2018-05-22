@@ -1,12 +1,13 @@
 class EquationCoeffView implements View {
   Manipul8Model model;
   Box box;
-  int coeffIndex;
+  int coeffIndex, currentFiducialId;
   
   EquationCoeffView(Manipul8Model _model, Box _box, int _coeffIndex) {
     model = _model;
     box = _box;
     coeffIndex = _coeffIndex;
+    currentFiducialId = -1;
     model.register(this);
   }
   
@@ -32,11 +33,13 @@ class EquationCoeffView implements View {
   }
   
   void handle(Event e) {
-    if (model.debug) { e.log("EquationCoeffView" + coeffIndex + "(BOX: " + box.x +", "+ box.y + ", "+box.wt + ", "+box.ht + ")"); }
-    if (e.name == "FIDUCIAL CHANGED" || e.name == "FIDUCIAL ADDED") {
+    log.debug("        EquationCoeffView " + coeffIndex + " (BOX: " + box.x +", "+ box.y + ", "+box.wt + ", "+box.ht + ") received event: " + e.describe());
+    if ((e.name == "FIDUCIAL CHANGED" || e.name == "FIDUCIAL ADDED") && (currentFiducialId == -1)) {
+      currentFiducialId = e.id;
       if (model.coeffIDs.containsKey(e.id)) model.coeffs[coeffIndex] = model.coeffIDs.get(e.id);
     }
-    if (e.name == "FIDUCIAL REMOVED" || e.name == "FIDUCIAL OUT") {
+    if ((e.name == "FIDUCIAL REMOVED" || e.name == "FIDUCIAL OUT") && (e.id == currentFiducialId)) {
+      currentFiducialId = -1;
       if (model.coeffIDs.containsKey(e.id) && model.hasEquation) model.coeffs[coeffIndex] = 0; 
     }
   }

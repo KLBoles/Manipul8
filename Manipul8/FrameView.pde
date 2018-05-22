@@ -13,7 +13,6 @@ class FrameView implements View {
   } 
   
   void render() {
-   // box.renderWireframe("FRAME VIEW");
     if (model.hasEquation) { equationView.render();}
   }
   
@@ -26,7 +25,7 @@ class FrameView implements View {
   }
   
   void handle(Event e) {   
-    if (model.debug) { e.log("FrameView"); }    
+    log.debug("    FrameView received event: " + e.describe());
     if (e.name == "FIDUCIAL ADDED" || e.name == "FIDUCIAL CHANGED") {
       if (model.equationIDs.containsKey(e.id) && !model.hasEquation) { 
         model.handle(e.rename("EQUATION ADDED"));

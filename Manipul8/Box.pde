@@ -11,7 +11,14 @@ class Box {
   
   // Returns true or false depending on whether the event is within the box.
   boolean contains(Event e) {
-    return e.has_position && x < e.x && e.x < (x + wt) && y < e.y && e.y < (y + ht); 
+    return e.has_position && x <= e.x && e.x < (x + wt) && y <= e.y && e.y < (y + ht); 
+  }
+  
+  boolean intersects(Box b) {
+    boolean xOverlap = !((max(x, x + wt) <= min(b.x, b.x + b.wt)) || (max(b.x, b.x + b.wt) <= min(x, x + wt)));
+    boolean yOverlap = !((max(y, y + ht) <= min(b.y, b.y + b.ht)) || (max(b.y, b.y + b.ht) <= min(y, x + ht)));
+    println("  overlaps: ", xOverlap, yOverlap);
+    return xOverlap && yOverlap;
   }
   
   // Returns a new box, offset by x and y values.
@@ -37,14 +44,14 @@ class Box {
     rect(x, y, wt, ht);
   }
   
-  void log(String message) {
-     println(message, x, y, wt, ht);
-  }
-  
   // Adds text within this box, wrapping if necessary. 
   void addText(String message) {
     fill(255);
     text(message, x + TEXT_PADDING, y + TEXT_PADDING, wt - 2*TEXT_PADDING, ht - 2*TEXT_PADDING);
+  }
+  
+  String describe() {
+    return "(" + x + ", " + y + ", " + wt + ", " + ht + ")"; 
   }
   
   int[] center() {

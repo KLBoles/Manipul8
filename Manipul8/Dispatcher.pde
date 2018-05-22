@@ -1,4 +1,4 @@
-// Watches for events and alerts people who care. 
+// Watches for events and alerts subscribers. 
 // This is needed because views otherwise can't know when a fiducial has left
 // their box. 
 

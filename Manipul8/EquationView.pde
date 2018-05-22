@@ -24,7 +24,7 @@ class EquationView implements View {
      pushMatrix();
      translate(x, y);
      rotate(angle);
-     box.renderWireframe("EQUATION VIEW");
+     box.renderWireframe("");
      for (EquationCoeffView view : coeffViews) { view.render(); }
      popMatrix();
   }
@@ -55,7 +55,7 @@ class EquationView implements View {
   }
   
   void handle(Event e) {
-    if (model.debug) { e.log("EquationView"); }
+    log.debug("      EquationView received event: " + e.describe());
     if (e.name == "MODEL CHANGED EQUATION" && model.hasEquation) { updateView(); }
     if (e.name == "FIDUCIAL CHANGED" && model.equationIDs.containsKey(e.id)) { updatePosition(e); }
     Event projectedEvent = e.project(getProjection(true));

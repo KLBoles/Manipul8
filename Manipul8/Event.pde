@@ -9,6 +9,13 @@ class Event {
   has_position = false;
  }
  
+ Event(int _x, int _y) {
+   name = "Unnamed";
+   x = _x;
+   y = _y;
+   has_position = true;
+ }
+ 
  Event(String _name, int _x, int _y, float _angle, int _id) {
     name = _name;
     x = _x;
@@ -45,7 +52,7 @@ class Event {
    return newEvent;
  }
  
- void log(String message) {
-   println(message, name, x, y, angle, id); 
+ String describe() {
+   return "["+name+"] x:"+nf(x)+" y:"+nf(y)+" angle:"+nf(angle)+" id:"+nf(id);
  }
 }
