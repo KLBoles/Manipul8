@@ -17,7 +17,6 @@ class Box {
   boolean intersects(Box b) {
     boolean xOverlap = !((max(x, x + wt) <= min(b.x, b.x + b.wt)) || (max(b.x, b.x + b.wt) <= min(x, x + wt)));
     boolean yOverlap = !((max(y, y + ht) <= min(b.y, b.y + b.ht)) || (max(b.y, b.y + b.ht) <= min(y, x + ht)));
-    println("  overlaps: ", xOverlap, yOverlap);
     return xOverlap && yOverlap;
   }
   

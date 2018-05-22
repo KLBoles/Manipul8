@@ -74,13 +74,10 @@ class PatternView implements View {
       if (chunkType == "QUAD") newChunkBox = new Box(0, 0, n(), n());
       else if (chunkType == "LINEAR") newChunkBox = new Box(0, 0, n(), 1);
       else newChunkBox = new Box(0, 0, 1, 1);
-      log.debug("Placing a " + chunkType);
       while (true) {
-        log.debug("  Considering position " + newChunkBox.describe());
         boolean validPosition = true;
         for (Box chunkBox : chunkBoxes) {
           if (chunkBox.intersects(newChunkBox)) {
-            log.debug("    NO: intersects" + chunkBox.describe());
             validPosition = false;
             break;
           }

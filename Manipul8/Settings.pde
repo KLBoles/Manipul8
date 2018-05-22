@@ -2,7 +2,7 @@
 
 // Sets how much information to print to the screen.
 // Options are DEBUG, INFO, WARN, ERROR.
-int LOG_LEVEL = DEBUG;
+int LOG_LEVEL = INFO;
 
 // Sets how the app can be controlled. When true, 
 // allows control with the mouse and keyboard; 
