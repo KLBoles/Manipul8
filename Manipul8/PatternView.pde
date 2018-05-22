@@ -2,7 +2,7 @@ import java.util.Collections;
 import java.util.Random;
 
 // Some constants for pattern styles
-int CHUNKS_IN_ROWS = 1;
+int CHUNKS_IN_COLUMNS = 1;
 int CHUNKS_JUMBLED = 2;
 int SQUARES_JUMBLED = 3;
 
@@ -31,7 +31,7 @@ class PatternView implements View {
       pushMatrix(); // Padding
       int xPadding = (box.wt - PATTERN_BLOCK_SIZE * PATTERN_MAX_COLUMNS) / 2;
       translate(box.x + xPadding, box.y + PATTERN_BLOCK_SIZE + PATTERN_TEXT_SIZE);
-      if (PATTERN_STYLE == CHUNKS_IN_ROWS) renderChunksInRows();
+      if (PATTERN_STYLE == CHUNKS_IN_COLUMNS) renderChunksInColumns();
       else if (PATTERN_STYLE == CHUNKS_JUMBLED) renderChunksJumbled();
       else if (PATTERN_STYLE == SQUARES_JUMBLED) renderSquaresJumbled();
       popMatrix(); // Padding
@@ -39,7 +39,7 @@ class PatternView implements View {
   }
     
   // Does not respect PATTERN_MAX_COLUMNS
-  void renderChunksInRows() {
+  void renderChunksInColumns() {
     for (int i=0; i < model.coeffTypes.length; i++) {
       pushMatrix();
       if (model.coeffTypes[i] == "QUAD") {  
@@ -126,6 +126,7 @@ class PatternView implements View {
         j++;
       } 
       fill(model.getColor(squareType));
+      stroke(0);
       rect(i*PATTERN_BLOCK_SIZE, j*PATTERN_BLOCK_SIZE, PATTERN_BLOCK_SIZE, PATTERN_BLOCK_SIZE);
       i++;
     }
