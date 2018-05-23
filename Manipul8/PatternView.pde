@@ -132,7 +132,14 @@ class PatternView implements View {
   
   // Looks up the n value for this pattern view.
   int n() {
-    return model.nValues.get(index);
+    if (index >= model.nValues.size()) {
+      log.warn("Tried to access nValues["+index+"] but there are only " + 
+          model.nValues.size() + " values.");
+      return -1;
+    }
+    else {
+      return model.nValues.get(index);
+    }
   }
   
   void renderQuadPattern(int coeff) {

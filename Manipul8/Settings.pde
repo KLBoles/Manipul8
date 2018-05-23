@@ -4,11 +4,11 @@
 // breaking changes--the app starts working in a fundamentally new
 // way. Minor releases are for new functionality. Patches are for
 // incremental development. 
-String VERSION = "0.2.0";
+String VERSION = "0.2.1";
 
 // Sets how much information to print to the screen.
 // Options are DEBUG, INFO, WARN, ERROR.
-int LOG_LEVEL = DEBUG;
+int LOG_LEVEL = INFO;
 
 // Causes all views to render their wireframes to show their current positions.
 boolean DEBUG_VIEWS = false;
