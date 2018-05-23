@@ -1,4 +1,10 @@
 
+// Semantic versioning will help us keep track of which version
+// has problems. Major releases get increased when there are 
+// breaking changes--the app starts working in a fundamentally new
+// way. Minor releases are for new functionality. Patches are for
+// incremental development. 
+String VERSION = "0.1.1";
 
 // Sets how much information to print to the screen.
 // Options are DEBUG, INFO, WARN, ERROR.

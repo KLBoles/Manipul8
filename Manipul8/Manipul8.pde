@@ -23,6 +23,7 @@ void setup() {
   calibration = new Calibration();
   tuioClient  = new TuioProcessing(this);
   if (USE_TEST_INTERFACE) { setupTesting(); } 
+  log.info("Manipul8 version " + VERSION);
 }
 
 void draw() {
