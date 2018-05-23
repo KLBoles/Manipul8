@@ -34,6 +34,7 @@ class Box {
   void renderWireframe(String label) {
     noFill();
     stroke(255);
+    strokeWeight(1);
     drawRect();
     addText(label);
   }
