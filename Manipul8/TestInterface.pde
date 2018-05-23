@@ -5,7 +5,7 @@
 Event fakeFiducial;
 
 void setupTesting() {
-  log.info("Using testing interface.");
+  showHelp();
   int frameCenter[] = view.frameView.box.center();
   fakeFiducial = new Event("FIDUCIAL ADDED", frameCenter[0], frameCenter[1], radians(0), 119);
   view.handle(fakeFiducial);
@@ -26,12 +26,29 @@ void setupTesting() {
   dispatcher.handle(fakeFiducial);
 }
 
+void showHelp() {
+  log.info("========================================================================");
+  log.info("Using testing interface. The mouse pointer will now act as a fiducial.");
+  log.info("Use these controls to switch which fiducial is controlled: ");
+  log.info("  q: quadratic equation fiducial");
+  log.info("  l: linear equation fiducial");
+  log.info("  [0,1,2]: coefficient fiducial");
+  log.info("  [x,y,z]: number line token fiducial");
+  log.info("");
+  log.info("  h: show this help message");
+  log.info("========================================================================");
+  log.info("");
+}
+
 void testInterfaceKeyPressedHandler() {
   if (key == 'q') replaceFiducial(119, true);
   if (key == 'l') replaceFiducial(120, true);
   if (key == '0') replaceFiducial(88, false);
   if (key == '1') replaceFiducial(89, false);
   if (key == '2') replaceFiducial(90, false);
+  if (key == 'x') replaceFiducial(85, false);
+  if (key == 'y') replaceFiducial(86, false);
+  if (key == 'z') replaceFiducial(87, false);
 }
 
 void replaceFiducial(int id, boolean remove) {
