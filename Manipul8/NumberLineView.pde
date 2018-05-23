@@ -12,6 +12,15 @@ class NumberLineView implements View {
   
   void render() {
     box.renderWireframe("Number line view");
+    draw_number_line();
+  }
+  
+  void draw_number_line() {
+    strokeWeight(NUMBER_LINE_STROKE_WEIGHT);
+    stroke(255);
+    int[] c = box.center();
+    line(c[0] - NUMBER_LINE_LENGTH/2, c[1], c[0] + NUMBER_LINE_LENGTH/2, c[1]);
+    int 
   }
   
   boolean responds_to(Event e) {

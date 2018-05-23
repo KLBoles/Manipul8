@@ -25,7 +25,11 @@ int VIEW_HEIGHT = 580;
 int FRAME_HEIGHT = 100;
 
 // Vertical space for number line view
-int NUMBER_LINE_HEIGHT = 60;
+int NUMBER_LINE_HEIGHT = 100;
+int NUMBER_LINE_MAX_VALUE = 8;
+int NUMBER_LINE_STROKE_WEIGHT = 4;
+int NUMBER_LINE_LENGTH = 800;
+int NUMBER_LINE_TICK_HEIGHT = 20;
 
 // Amount of padding around the equation inputs
 int EQUATION_PADDING = 10;
