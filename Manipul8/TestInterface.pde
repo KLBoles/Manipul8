@@ -49,6 +49,7 @@ void testInterfaceKeyPressedHandler() {
   if (key == 'x') replaceFiducial(85, false);
   if (key == 'y') replaceFiducial(86, false);
   if (key == 'z') replaceFiducial(87, false);
+  if (key == 'h') showHelp();
 }
 
 void replaceFiducial(int id, boolean remove) {
