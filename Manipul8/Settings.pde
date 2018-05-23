@@ -24,6 +24,9 @@ int VIEW_HEIGHT = 580;
 // The 'frame' is the space where the equations can be placed. 
 int FRAME_HEIGHT = 100;
 
+// Vertical space for number line view
+int NUMBER_LINE_HEIGHT = 60;
+
 // Amount of padding around the equation inputs
 int EQUATION_PADDING = 10;
 
