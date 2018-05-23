@@ -1,12 +1,9 @@
 
 // An equationView has a fiducial and then a certain number of 
-// inputs, each occupying INPUT_SIZE squares, spaced out by
-// INPUT_SPACING. The box has PADDING around these.
+// inputs, each occupying EQUATION_INPUT_SIZE squares, spaced out by
+// EQUATION_INPUT_SPACING. The box has EQUATION_PADDING around these.
 
 class EquationView implements View {
-  int PADDING = 10;
-  int INPUT_SIZE = 40;
-  int INPUT_SPACING = 50;
   Manipul8Model model;
   Box box;
   int x, y;
@@ -71,14 +68,14 @@ class EquationView implements View {
   
   // Whenever the equation changes, we need to update the box.
   void updateView() {
-    int wt = model.coeffTypes.length * INPUT_SPACING + INPUT_SIZE + 2 * PADDING;
-    int ht = INPUT_SIZE + 2*PADDING;
-    box = new Box(-(INPUT_SIZE/2 + PADDING), -(INPUT_SIZE/2 + PADDING), wt, ht);
+    int wt = model.coeffTypes.length * EQUATION_INPUT_SPACING + EQUATION_INPUT_SIZE + 2 * EQUATION_PADDING;
+    int ht = EQUATION_INPUT_SIZE + 2*EQUATION_PADDING;
+    box = new Box(-(EQUATION_INPUT_SIZE/2 + EQUATION_PADDING), -(EQUATION_INPUT_SIZE/2 + EQUATION_PADDING), wt, ht);
     
-    Box coeffBox = new Box(-INPUT_SIZE/2, -INPUT_SIZE/2, INPUT_SIZE, INPUT_SIZE);
+    Box coeffBox = new Box(-EQUATION_INPUT_SIZE/2, -EQUATION_INPUT_SIZE/2, EQUATION_INPUT_SIZE, EQUATION_INPUT_SIZE);
     coeffViews = new ArrayList<EquationCoeffView>();
      for (int i=0; i < model.coeffTypes.length; i++) {
-       coeffBox = coeffBox.offset(INPUT_SPACING, 0);
+       coeffBox = coeffBox.offset(EQUATION_INPUT_SPACING, 0);
        coeffViews.add(new EquationCoeffView(model, coeffBox, i));
      }
   }

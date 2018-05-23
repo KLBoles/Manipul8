@@ -24,6 +24,15 @@ int VIEW_HEIGHT = 580;
 // The 'frame' is the space where the equations can be placed. 
 int FRAME_HEIGHT = 100;
 
+// Amount of padding around the equation inputs
+int EQUATION_PADDING = 10;
+
+// Size of the squares sensitive to equation input fiducials
+int EQUATION_INPUT_SIZE = 40;
+
+// Offset from one equation input fiducial to the next
+int EQUATION_INPUT_SPACING = 50;
+
 // Style for laying out blocks. Options:
 // CHUNKS_IN_COLUMNS, CHUNKS_JUMBLED, SQUARES_JUMBLED
 int PATTERN_STYLE = CHUNKS_JUMBLED;
@@ -37,19 +46,17 @@ int PATTERN_TEXT_SIZE = 40;
 // The maximum number of columns of blocks
 int PATTERN_MAX_COLUMNS = 12;
 
-// Sets an amount by which to to adjust fiducial 
-// orientations (in radians)
+// Amount by which to to adjust fiducial orientations (in radians)
 float ANGLE_OFFSET = 0;
 
-// Sets colors for squares in patterns
+// Colors for various types of squares in patterns
 boolean SHOW_COLORS = true;
 color STANDARD_COLOR = color(255,226,0);
 color QUAD_COLOR = color(255,87,78);
 color LINEAR_COLOR = color(125,209,69);
 color CONSTANT_COLOR = color(74,201,239);
 
-// Sets N values. Later, this can be changed to 
-// set by fiducial. 
+// Initial N values. Later, this can be changed to set by fiducial. 
 int N1 = 1;
 int N2 = 2; 
 int N3 = 4;
