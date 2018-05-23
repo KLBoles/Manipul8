@@ -12,6 +12,7 @@ class EquationCoeffView implements View {
   }
   
   void render() {
+    if (DEBUG_VIEWS) box.renderWireframe(nf(coeffIndex));
     if (model.hasEquation) {
       String coeffType = model.coeffTypes[coeffIndex];
       if (model.coeffs[coeffIndex] > 0) {

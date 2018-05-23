@@ -3,6 +3,7 @@
 class Manipul8Model {
   HashMap<Integer, Integer> coeffIDs;
   HashMap<Integer, String[]> equationIDs;
+  IntList numberLineTokenIDs;
   int[] coeffs;
   String[] coeffTypes;
   ArrayList<View> views;
@@ -57,6 +58,15 @@ class Manipul8Model {
     }
   }
   
+  void add_n(int n) {
+    nValues.append(n);
+    nValues.sort();
+  }
+  
+  void remove_n(int n) {
+    nValues.removeValue(n);
+  }
+  
   // Sets values that affect the program's behavior. 
   void configure() {
     equationIDs = new HashMap<Integer, String[]>();
@@ -90,10 +100,12 @@ class Manipul8Model {
     coeffIDs.put(106,8);
     coeffIDs.put(107,9);
     
+    numberLineTokenIDs = new IntList();
+    numberLineTokenIDs.append(85);
+    numberLineTokenIDs.append(86);
+    numberLineTokenIDs.append(87);
+    
     nValues = new IntList();
-    nValues.append(N1);
-    nValues.append(N2);
-    nValues.append(N3);
     
     showColors= SHOW_COLORS;
     standardColor= STANDARD_COLOR;

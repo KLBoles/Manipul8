@@ -13,7 +13,8 @@ class FrameView implements View {
   } 
   
   void render() {
-    if (model.hasEquation) { equationView.render();}
+    if (DEBUG_VIEWS) box.renderWireframe("FrameView");
+    if (model.hasEquation) equationView.render();
   }
   
   boolean responds_to(Event e) {

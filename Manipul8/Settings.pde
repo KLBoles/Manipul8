@@ -4,11 +4,14 @@
 // breaking changes--the app starts working in a fundamentally new
 // way. Minor releases are for new functionality. Patches are for
 // incremental development. 
-String VERSION = "0.1.1";
+String VERSION = "0.2.0";
 
 // Sets how much information to print to the screen.
 // Options are DEBUG, INFO, WARN, ERROR.
-int LOG_LEVEL = INFO;
+int LOG_LEVEL = DEBUG;
+
+// Causes all views to render their wireframes to show their current positions.
+boolean DEBUG_VIEWS = false;
 
 // Sets how the app can be controlled. When true, 
 // allows control with the mouse and keyboard; 
@@ -30,6 +33,9 @@ int NUMBER_LINE_MAX_VALUE = 8;
 int NUMBER_LINE_STROKE_WEIGHT = 4;
 int NUMBER_LINE_LENGTH = 800;
 int NUMBER_LINE_TICK_HEIGHT = 20;
+int NUMBER_LINE_INPUT_SIZE = 40;
+int NUMBER_LINE_TOKEN_SIZE = 40;
+color NUMBER_LINE_TOKEN_COLOR = color(200, 0, 200);
 
 // Amount of padding around the equation inputs
 int EQUATION_PADDING = 10;
@@ -39,6 +45,8 @@ int EQUATION_INPUT_SIZE = 40;
 
 // Offset from one equation input fiducial to the next
 int EQUATION_INPUT_SPACING = 50;
+
+int NUM_PATTERN_VIEWS = 3;
 
 // Style for laying out blocks. Options:
 // CHUNKS_IN_COLUMNS, CHUNKS_JUMBLED, SQUARES_JUMBLED
@@ -63,7 +71,4 @@ color QUAD_COLOR = color(255,87,78);
 color LINEAR_COLOR = color(125,209,69);
 color CONSTANT_COLOR = color(74,201,239);
 
-// Initial N values. Later, this can be changed to set by fiducial. 
-int N1 = 1;
-int N2 = 2; 
-int N3 = 4;
+int BOX_WIREFRAME_TEXT_SIZE = 10;

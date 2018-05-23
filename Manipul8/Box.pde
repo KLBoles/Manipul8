@@ -36,6 +36,9 @@ class Box {
     stroke(255);
     strokeWeight(1);
     drawRect();
+    fill(255);
+    textSize(BOX_WIREFRAME_TEXT_SIZE);
+    textAlign(LEFT);
     addText(label);
   }
   
@@ -46,7 +49,6 @@ class Box {
   
   // Adds text within this box, wrapping if necessary. 
   void addText(String message) {
-    fill(255);
     text(message, x + TEXT_PADDING, y + TEXT_PADDING, wt - 2*TEXT_PADDING, ht - 2*TEXT_PADDING);
   }
   

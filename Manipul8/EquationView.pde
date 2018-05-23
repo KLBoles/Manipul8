@@ -21,16 +21,16 @@ class EquationView implements View {
      pushMatrix();
      translate(x, y);
      rotate(angle);
-     box.renderWireframe("");
+     box.renderWireframe("EqnView");
      for (EquationCoeffView view : coeffViews) { view.render(); }
      popMatrix();
   }
   
   boolean responds_to(Event e) {
-    if (e.name == "MODEL CHANGED EQUATION") { return true;}
-    if (model.coeffTypes == null) { return false; }
-    if (e.name == "FIDUCIAL CHANGED" && model.equationIDs.containsKey(e.id)) { return true;}
-    if (!e.has_position) { return false; }
+    if (e.name == "MODEL CHANGED EQUATION") return true;
+    if (model.coeffTypes == null) return false; 
+    if (e.name == "FIDUCIAL CHANGED" && model.equationIDs.containsKey(e.id)) return true;
+    if (!e.has_position) return false; 
     return box.contains(e.project(getProjection(true)));
   }
   

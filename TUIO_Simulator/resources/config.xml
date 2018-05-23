@@ -81,6 +81,12 @@ Define the values as red disks.
 <object class="red disk" fiducials="106" active="false" xpos="540" ypos="570" angle="0"/>
 
 <!-- 
+Define the values as red disks.
+-->
+<object class="green star" fiducials="85" active="false" xpos="480" ypos="30" angle="0"/>
+<object class="green star" fiducials="86" active="false" xpos="540" ypos="30" angle="0"/>
+<object class="green star" fiducials="87" active="false" xpos="600" ypos="30" angle="0"/>
+<!-- 
 here we create four disks with the IDs from 4-7
 -->
 <!--

@@ -21,12 +21,13 @@ class PatternView implements View {
   }
 
   void render() {
+    if (index >= model.nValues.size()) return; 
     int LABEL_WIDTH=100;
     textSize(PATTERN_TEXT_SIZE);    
     textAlign(CENTER, TOP);
     fill(255);
     text("n= " + nf(n()), box.center()[0], box.y);
-    box.renderWireframe("");
+    if (DEBUG_VIEWS) box.renderWireframe("PatternView " + nf(index));
     if (model.hasEquation) {
       pushMatrix(); // Padding
       int xPadding = (box.wt - PATTERN_BLOCK_SIZE * PATTERN_MAX_COLUMNS) / 2;

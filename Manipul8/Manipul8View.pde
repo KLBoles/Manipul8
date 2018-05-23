@@ -6,6 +6,7 @@ class Manipul8View implements View {
   Box box;
   FrameView frameView;
   NumberLineView numberLineView;
+  ArrayList<PatternView> patternViews;
   PatternView pv1;
   PatternView pv2;
   PatternView pv3;
@@ -16,22 +17,32 @@ class Manipul8View implements View {
     frameView = new FrameView(model, box.rescale(box.wt, FRAME_HEIGHT));
     numberLineView = new NumberLineView(model, 
         new Box(box.x, box.y + frameView.box.ht, box.wt, NUMBER_LINE_HEIGHT));   
-        
-    Box pvBox = box.rescale(box.wt/3, box.ht - frameView.box.ht - numberLineView.box.ht);
-    pv1 = new PatternView(model, pvBox.offset(0, frameView.box.ht + numberLineView.box.ht),            0);
-    pv2 = new PatternView(model, pvBox.offset(box.wt/3, frameView.box.ht + numberLineView.box.ht),     1);
-    pv3 = new PatternView(model, pvBox.offset(2 * box.wt/3, frameView.box.ht + numberLineView.box.ht), 2);
+    Box pvBox = box.rescale(box.wt/NUM_PATTERN_VIEWS, 
+        box.ht - frameView.box.ht - numberLineView.box.ht);
+    patternViews = new ArrayList<PatternView>();
+    for (int i=0; i<NUM_PATTERN_VIEWS; i++) {
+      int xOffset = i * box.wt/NUM_PATTERN_VIEWS;
+      int yOffset = frameView.box.ht + numberLineView.box.ht;
+      PatternView pv = new PatternView(model, pvBox.offset(xOffset, yOffset), i);
+      patternViews.add(pv);
+    }
     model.register(this);
   }
   
   void render() {
     fill(255, 0, 0);
-    box.renderWireframe("");
     frameView.render();
     numberLineView.render();
-    pv1.render();
-    pv2.render();
-    pv3.render();
+    for (PatternView pv : patternViews) pv.render();
+    stroke(NUMBER_LINE_TOKEN_COLOR);
+    strokeWeight(NUMBER_LINE_STROKE_WEIGHT);
+    for (int i=0; i<model.nValues.size(); i++) {
+      int n = model.nValues.get(i);
+      int[] tokenCenter = numberLineView.inputViews.get(n).box.center();
+      int[] viewCenter = patternViews.get(i).box.center();
+      int viewY = patternViews.get(i).box.y;
+      line(tokenCenter[0], tokenCenter[1], viewCenter[0], viewY); 
+    }
   }
   
   boolean responds_to(Event e) {
@@ -46,8 +57,6 @@ class Manipul8View implements View {
     log.debug("  Manipul8View received event: " + e.describe());
     if (frameView.responds_to(e))      frameView.handle(e);
     if (numberLineView.responds_to(e)) numberLineView.handle(e);
-    if (pv1.responds_to(e))            pv1.handle(e);
-    if (pv2.responds_to(e))            pv2.handle(e); 
-    if (pv3.responds_to(e))            pv3.handle(e); 
+    for (PatternView pv : patternViews) if (pv.responds_to(e)) pv.handle(e);
   }
 }
