@@ -25,6 +25,10 @@ Manipul8 can be tested indepentently of the TUIO table using the [reacTIVision T
 After you download and upack the files, replace `resources/config.xml` with the version included in this repository so 
 that you will have access to the proper fiducial IDs. 
 
+There is also a built-in testing interface, where the mouse cursor serves as a fiducial and you can use different 
+keys to switch the fiducial ID. To use this mode, set `USE_TEST_INTERFACE` to `true` in Settings. More information 
+on the controls will be printed to the log when you start the app.
+
 [processing]: https://processing.org/
 [semver]: https://semver.org/
 [rv]: http://reactivision.sourceforge.net/
