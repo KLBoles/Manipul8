@@ -108,6 +108,7 @@ class PatternView implements View {
   }
   
   void renderSquaresJumbled() {
+    strokeWeight(1);
     int blocks = 0;
     ArrayList<String> squareTypes = new ArrayList<String>();
     for (int i=0; i < model.coeffTypes.length; i++) {
