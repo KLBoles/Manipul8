@@ -14,6 +14,11 @@ class Box {
     return e.has_position && x <= e.x && e.x < (x + wt) && y <= e.y && e.y < (y + ht); 
   }
   
+  // Returns true if b is within this box
+  boolean contains(Box b) {
+    return x <= b.x && y <= b.y && b.x+b.wt <= x+wt && b.y+b.ht <= y+ht;
+  }
+  
   boolean intersects(Box b) {
     boolean xOverlap = !((max(x, x + wt) <= min(b.x, b.x + b.wt)) || (max(b.x, b.x + b.wt) <= min(x, x + wt)));
     boolean yOverlap = !((max(y, y + ht) <= min(b.y, b.y + b.ht)) || (max(b.y, b.y + b.ht) <= min(y, x + ht)));

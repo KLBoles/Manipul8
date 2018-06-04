@@ -3,10 +3,76 @@ import java.util.Random;
 
 // Some constants for pattern styles
 int CHUNKS_IN_COLUMNS = 1;
-int CHUNKS_JUMBLED = 2;
-int SQUARES_JUMBLED = 3;
+int SQUARES_JUMBLED = 2;
+int CHUNKS_JUMBLED_HORIZONTAL = 3;
+int CHUNKS_JUMBLED_VERTICAL = 4;
+int CHUNKS_JUMBLED_DIAG = 5;
 
+// ========================================================
+// HELPER: SearchStrategy
+// The jumbled layouts place one block at a time. Each time
+// they go to place a block, they need a strategy for searching
+// through the possible placements. Implementing SearchStrategy
+// as a class lets us flexibly swap out the strategy. 
 
+interface SearchStrategy {
+  void next(Box box, Box boundingBox); 
+}
+
+// Scans along rows
+class HorizontalSearch implements SearchStrategy{
+  void next(Box box, Box boundingBox) {
+    box.x++;
+    if (!boundingBox.contains(box)) {
+      box.x = 0;
+      box.y++;
+    } 
+    if (!boundingBox.contains(box)) {
+      log.error("Could not find a valid chunk placement.");
+    }
+  }
+}
+
+// Scans along columns
+class VerticalSearch implements SearchStrategy{
+  void next(Box box, Box boundingBox) {
+    box.y++;
+    if (!boundingBox.contains(box)) {
+      box.y = 0;
+      box.x++;
+    } 
+    if (!boundingBox.contains(box)) {
+      log.error("Could not find a valid chunk placement.");
+    }
+  }
+}
+
+// Scans diagonally. Whee!
+class DiagonalSearch implements SearchStrategy{
+  String mode;
+  
+  void next(Box box, Box boundingBox) {
+    while (true) {
+      if (box.x == 0 && box.y == 0) mode = "shiftRight";
+      if (mode == "shiftRight") {
+        box.x = box.y + 1;
+        box.y = 0;
+        mode = "diagonal";
+      }
+      else if (mode == "diagonal") {
+        box.x -= 1;
+        box.y += 1;
+        if (box.x == 0) mode = "shiftRight";
+      }
+      if (!boundingBox.contains(box.rescale(1,1))) {
+        log.error("Could not find a valid chunk placement.");
+        return;
+      }
+      if (boundingBox.contains(box)) break;
+    }
+  }
+}
+// ==========================================================
 
 class PatternView implements View {
   Manipul8Model model;
@@ -33,7 +99,9 @@ class PatternView implements View {
       int xPadding = (box.wt - PATTERN_BLOCK_SIZE * PATTERN_MAX_COLUMNS) / 2;
       translate(box.x + xPadding, box.y + PATTERN_BLOCK_SIZE + PATTERN_TEXT_SIZE);
       if (PATTERN_STYLE == CHUNKS_IN_COLUMNS) renderChunksInColumns();
-      else if (PATTERN_STYLE == CHUNKS_JUMBLED) renderChunksJumbled();
+      else if (PATTERN_STYLE == CHUNKS_JUMBLED_HORIZONTAL) renderChunksJumbled(new HorizontalSearch());
+      else if (PATTERN_STYLE == CHUNKS_JUMBLED_VERTICAL) renderChunksJumbled(new VerticalSearch());
+      else if (PATTERN_STYLE == CHUNKS_JUMBLED_DIAG) renderChunksJumbled(new DiagonalSearch());
       else if (PATTERN_STYLE == SQUARES_JUMBLED) renderSquaresJumbled();
       popMatrix(); // Padding
     }
@@ -59,7 +127,7 @@ class PatternView implements View {
     for (int i=0; i < model.coeffTypes.length; i++) popMatrix();
   }
   
-  void renderChunksJumbled() {
+  void renderChunksJumbled(SearchStrategy strategy) {
     // Make a list of all the chunks we need (chunks are squares, lines, and units)
     ArrayList<String> chunkTypes = new ArrayList<String>();
     for (int i=0; i < model.coeffTypes.length; i++) {
@@ -75,25 +143,7 @@ class PatternView implements View {
       if (chunkType == "QUAD") newChunkBox = new Box(0, 0, n(), n());
       else if (chunkType == "LINEAR") newChunkBox = new Box(0, 0, n(), 1);
       else newChunkBox = new Box(0, 0, 1, 1);
-      while (true) {
-        boolean validPosition = true;
-        for (Box chunkBox : chunkBoxes) {
-          if (chunkBox.intersects(newChunkBox)) {
-            validPosition = false;
-            break;
-          }
-        }
-        if (validPosition) break;
-        
-        newChunkBox.x++;
-        if (newChunkBox.x + newChunkBox.wt - 1 >= PATTERN_MAX_COLUMNS) {
-          newChunkBox.x = 0;
-          newChunkBox.y++;
-        } 
-        if (newChunkBox.y > 1000) {
-          log.error("Could not find a valid chunk placement.");
-        }
-      }
+      get_valid_position(newChunkBox, chunkBoxes, strategy);
       chunkBoxes.add(newChunkBox);
       
       // Render the chunk represented by each box
@@ -104,6 +154,23 @@ class PatternView implements View {
       if (chunkType == "LINEAR") renderLinearPattern(1);
       if (chunkType == "CONSTANT") renderConstantPattern(1);
       popMatrix();
+    }
+  }
+  
+  // A helper. Given a box and a list of pre-placed boxes, finds the next valid placement
+  // for the box and assigns its position. 
+  void get_valid_position(Box newChunkBox, ArrayList<Box> chunkBoxes, SearchStrategy Strategy) {
+    Box boundingBox = new Box(0, 0, PATTERN_MAX_COLUMNS, PATTERN_MAX_ROWS);
+    while (true) {
+      boolean validPosition = true;
+      for (Box chunkBox : chunkBoxes) {
+        if (chunkBox.intersects(newChunkBox)) {
+          validPosition = false;
+          break;
+        }
+      }
+      if (validPosition) break;
+      Strategy.next(newChunkBox, boundingBox);
     }
   }
   

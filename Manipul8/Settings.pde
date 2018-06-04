@@ -4,7 +4,7 @@
 // breaking changes--the app starts working in a fundamentally new
 // way. Minor releases are for new functionality. Patches are for
 // incremental development. 
-String VERSION = "0.2.1";
+String VERSION = "0.2.2";
 
 // Sets how much information to print to the screen.
 // Options are DEBUG, INFO, WARN, ERROR.
@@ -49,8 +49,9 @@ int EQUATION_INPUT_SPACING = 50;
 int NUM_PATTERN_VIEWS = 3;
 
 // Style for laying out blocks. Options:
-// CHUNKS_IN_COLUMNS, CHUNKS_JUMBLED, SQUARES_JUMBLED
-int PATTERN_STYLE = CHUNKS_JUMBLED;
+// CHUNKS_JUMBLED_HORIZONTAL, CHUNKS_JUMBLED_VERTICAL, CHUNKS_JUMBLED_DIAG
+// CHUNKS_IN_COLUMNS, SQUARES_JUMBLED
+int PATTERN_STYLE = CHUNKS_JUMBLED_DIAG;
 
 // Block size in patterns
 int PATTERN_BLOCK_SIZE = 20;
@@ -60,6 +61,7 @@ int PATTERN_TEXT_SIZE = 40;
 
 // The maximum number of columns of blocks
 int PATTERN_MAX_COLUMNS = 12;
+int PATTERN_MAX_ROWS = 16;
 
 // Amount by which to to adjust fiducial orientations (in radians)
 float ANGLE_OFFSET = 0;
