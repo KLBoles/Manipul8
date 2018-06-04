@@ -4,7 +4,7 @@
 // breaking changes--the app starts working in a fundamentally new
 // way. Minor releases are for new functionality. Patches are for
 // incremental development. 
-String VERSION = "0.2.2";
+String VERSION = "0.2.3";
 
 // Sets how much information to print to the screen.
 // Options are DEBUG, INFO, WARN, ERROR.
