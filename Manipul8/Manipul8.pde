@@ -50,7 +50,6 @@ void addTuioObject(TuioObject tobj) {
 // called when an object is moved
 void updateTuioObject (TuioObject tobj) {
   if (!USE_TEST_INTERFACE) {
-    //Event e = new Event("FIDUCIAL CHANGED", scaleX(tobj.getX()), scaleY(tobj.getY()), tobj.getAngle()+ANGLE_OFFSET, tobj.getSymbolID());
     Event e = new Event("FIDUCIAL CHANGED", tobj.getScreenX(width), tobj.getScreenY(height), tobj.getAngle()+ANGLE_OFFSET, tobj.getSymbolID());
     log.info(e.describe());
     view.handle(e);
@@ -61,8 +60,7 @@ void updateTuioObject (TuioObject tobj) {
 
 // called when an object is removed from the scene
 void removeTuioObject(TuioObject tobj) {
-  if (!USE_TEST_INTERFACE) {
-    //Event e = new Event("FIDUCIAL REMOVED", scaleX(tobj.getX()), scaleY(tobj.getY()), tobj.getAngle()+ANGLE_OFFSET, tobj.getSymbolID());
+  if (!USE_TEST_INTERFACE && !STICKY_FIDUCIAL_MODE) {
     Event e = new Event("FIDUCIAL REMOVED", tobj.getScreenX(width), tobj.getScreenY(height), tobj.getAngle()+ANGLE_OFFSET, tobj.getSymbolID());
     log.info(e.describe());
     view.handle(e);

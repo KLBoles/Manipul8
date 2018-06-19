@@ -4,7 +4,7 @@
 // breaking changes--the app starts working in a fundamentally new
 // way. Minor releases are for new functionality. Patches are for
 // incremental development. 
-String VERSION = "0.2.3";
+String VERSION = "0.2.4";
 
 // Sets how much information to print to the screen.
 // Options are DEBUG, INFO, WARN, ERROR.
@@ -16,7 +16,13 @@ boolean DEBUG_VIEWS = false;
 // Sets how the app can be controlled. When true, 
 // allows control with the mouse and keyboard; 
 // otherwise allows control via TUIO events. 
-boolean USE_TEST_INTERFACE = false;
+boolean USE_TEST_INTERFACE = true;
+
+// When true, the removal of fiducials is ignored. This is useful when 
+// a TUIO table is having trouble consistently registering fiducials. 
+// The effect is that you can't remove anything from the board, you can only 
+// swap things out and move them around. 
+boolean STICKY_FIDUCIAL_MODE = true;
 
 // Sets the position and size of the overall view. 
 int VIEW_X = 10;
@@ -24,7 +30,8 @@ int VIEW_Y = 10;
 int VIEW_WIDTH = 980;
 int VIEW_HEIGHT = 580;
 
-// The 'frame' is the space where the equations can be placed. 
+// The 'frame' is the space where the equations can be placed, at the top of the 
+// screen. 
 int FRAME_HEIGHT = 100;
 
 // Vertical space for number line view
